@@ -25,8 +25,8 @@ NotaBox is a modern, feature-rich file management system built with React, TypeS
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/notabox.git
-   cd notabox
+   https://github.com/notabox-search/notabox-search.git
+   cd notabox-search
    ```
 
 2. Install dependencies:
