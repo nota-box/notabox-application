@@ -4,12 +4,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Loader2 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
-import toast from 'react-hot-toast';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+    .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
@@ -20,10 +24,11 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 
 interface RegisterFormProps {
   onClose: () => void;
+  onSwitchToLogin: () => void;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
-  const { register: registerUser, isLoading, error, clearError } = useAuthStore();
+const RegisterForm: React.FC<RegisterFormProps> = ({ onClose, onSwitchToLogin }) => {
+  const { signUpWithEmail, isLoading, error, clearError } = useAuthStore();
   
   const {
     register,
@@ -35,12 +40,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      await registerUser(data.name, data.email, data.password);
-      toast.success('Successfully registered!');
+      await signUpWithEmail(data.email, data.password, data.name);
       onClose();
     } catch (err) {
-      toast.error(error || 'An error occurred');
-      clearError();
+      // Error is handled in the auth store
     }
   };
 
@@ -51,7 +54,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
         <input
           {...register('name')}
           type="text"
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
           placeholder="Enter your name"
         />
         {errors.name && (
@@ -64,7 +67,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
         <input
           {...register('email')}
           type="email"
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
           placeholder="Enter your email"
         />
         {errors.email && (
@@ -77,7 +80,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
         <input
           {...register('password')}
           type="password"
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
           placeholder="Enter your password"
         />
         {errors.password && (
@@ -90,7 +93,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
         <input
           {...register('confirmPassword')}
           type="password"
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
           placeholder="Confirm your password"
         />
         {errors.confirmPassword && (
@@ -113,6 +116,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose }) => {
           'Create account'
         )}
       </button>
+
+      <p className="text-sm text-center">
+        Already have an account?{' '}
+        <button
+          type="button"
+          onClick={onSwitchToLogin}
+          className="text-purple-500 hover:text-purple-600"
+        >
+          Sign in here
+        </button>
+      </p>
     </form>
   );
 };

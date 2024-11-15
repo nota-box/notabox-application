@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, LogIn } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import SocialAuthButton from './SocialAuthButton';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -10,6 +12,7 @@ interface AuthModalProps {
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, isDarkMode }) => {
+  const [isRegistering, setIsRegistering] = useState(false);
   const { signInWithGoogle, signInWithApple, signInAsGuest, isLoading } = useAuthStore();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -49,7 +52,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, isDarkMode }) =>
         } overflow-hidden animate-fade-in`}
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-200/10">
-          <h2 className="text-xl font-medium">Sign In</h2>
+          <h2 className="text-xl font-medium">
+            {isRegistering ? 'Create Account' : 'Sign In'}
+          </h2>
           <button
             onClick={onClose}
             className={`p-2 rounded-lg ${
@@ -60,20 +65,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, isDarkMode }) =>
           </button>
         </div>
 
-        <div className="p-6 space-y-4">
-          <SocialAuthButton
-            provider="Google"
-            onClick={() => handleAuth(signInWithGoogle)}
-            disabled={isLoading}
-            isDarkMode={isDarkMode}
-          />
-
-          <SocialAuthButton
-            provider="Apple"
-            onClick={() => handleAuth(signInWithApple)}
-            disabled={isLoading}
-            isDarkMode={isDarkMode}
-          />
+        <div className="p-6 space-y-6">
+          {isRegistering ? (
+            <RegisterForm
+              onClose={onClose}
+              onSwitchToLogin={() => setIsRegistering(false)}
+            />
+          ) : (
+            <LoginForm
+              onClose={onClose}
+              onSwitchToRegister={() => setIsRegistering(true)}
+            />
+          )}
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -88,16 +91,32 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, isDarkMode }) =>
             </div>
           </div>
 
-          <button
-            onClick={() => handleAuth(signInAsGuest)}
-            disabled={isLoading}
-            className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg
-              border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}
-              hover:bg-gray-50/5 transition-colors duration-200`}
-          >
-            <LogIn className="w-5 h-5" />
-            Continue as Guest
-          </button>
+          <div className="space-y-3">
+            <SocialAuthButton
+              provider="Google"
+              onClick={() => handleAuth(signInWithGoogle)}
+              disabled={isLoading}
+              isDarkMode={isDarkMode}
+            />
+
+            <SocialAuthButton
+              provider="Apple"
+              onClick={() => handleAuth(signInWithApple)}
+              disabled={isLoading}
+              isDarkMode={isDarkMode}
+            />
+
+            <button
+              onClick={() => handleAuth(signInAsGuest)}
+              disabled={isLoading}
+              className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg
+                border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}
+                hover:bg-gray-50/5 transition-colors duration-200`}
+            >
+              <LogIn className="w-5 h-5" />
+              Continue as Guest
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 NotaBox is a modern, feature-rich file management system built with React, TypeScript, and Firebase. It offers powerful search capabilities, real-time file management, and a beautiful user interface with dark mode support.
 
-![NotaBox](https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&h=400&q=80)
+![NotaBox.png](NotaBox.png)
 
 ## Features
 
@@ -25,8 +25,8 @@ NotaBox is a modern, feature-rich file management system built with React, TypeS
 
 1. Clone the repository:
    ```bash
-   https://github.com/notabox-search/notabox-search.git
-   cd notabox-search
+   git clone https://github.com/yourusername/notabox.git
+   cd notabox
    ```
 
 2. Install dependencies:

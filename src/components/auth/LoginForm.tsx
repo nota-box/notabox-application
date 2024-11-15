@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Loader2 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
-import toast from 'react-hot-toast';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -15,10 +14,11 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 interface LoginFormProps {
   onClose: () => void;
+  onSwitchToRegister: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
-  const { login, isLoading, error, clearError } = useAuthStore();
+const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSwitchToRegister }) => {
+  const { signInWithEmail, isLoading, error, clearError } = useAuthStore();
   
   const {
     register,
@@ -30,12 +30,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      await login(data.email, data.password);
-      toast.success('Successfully logged in!');
+      await signInWithEmail(data.email, data.password);
       onClose();
     } catch (err) {
-      toast.error(error || 'An error occurred');
-      clearError();
+      // Error is handled in the auth store
     }
   };
 
@@ -46,7 +44,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
         <input
           {...register('email')}
           type="email"
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
           placeholder="Enter your email"
         />
         {errors.email && (
@@ -59,7 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
         <input
           {...register('password')}
           type="password"
-          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
           placeholder="Enter your password"
         />
         {errors.password && (
@@ -82,6 +80,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
           'Sign in'
         )}
       </button>
+
+      <p className="text-sm text-center">
+        Don't have an account?{' '}
+        <button
+          type="button"
+          onClick={onSwitchToRegister}
+          className="text-purple-500 hover:text-purple-600"
+        >
+          Register here
+        </button>
+      </p>
     </form>
   );
 };

@@ -66,6 +66,12 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, isDarkMode }
     isDarkMode ? 'bg-gray-800' : 'bg-white'
   } p-6`;
 
+  const inputClass = `w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+    isDarkMode
+      ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
+      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+  }`;
+
   return (
     <div className={modalClass}>
       <div className={contentClass}>
@@ -98,9 +104,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, isDarkMode }
             Drag and drop your files here, or{' '}
             <span className="text-purple-500 cursor-pointer">browse</span>
           </p>
-          <p className={`text-sm ${
-            isDarkMode ? 'text-gray-400' : 'text-gray-500'
-          }`}>
+          <p className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>
             Supports all file types up to 50MB
           </p>
         </div>
@@ -113,11 +117,8 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, isDarkMode }
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className={`w-full px-4 py-2 rounded-lg ${
-                isDarkMode
-                  ? 'bg-gray-700 border-gray-600'
-                  : 'bg-white border-gray-300'
-              } border focus:outline-none focus:ring-2 focus:ring-purple-500`}
+              className={inputClass}
+              placeholder="Enter file title"
             />
           </div>
 
@@ -127,11 +128,8 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, isDarkMode }
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              className={`w-full px-4 py-2 rounded-lg ${
-                isDarkMode
-                  ? 'bg-gray-700 border-gray-600'
-                  : 'bg-white border-gray-300'
-              } border focus:outline-none focus:ring-2 focus:ring-purple-500`}
+              className={inputClass}
+              placeholder="Enter file description"
             />
           </div>
 
@@ -159,11 +157,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, isDarkMode }
               onChange={(e) => setCurrentTag(e.target.value)}
               onKeyDown={handleTagKeyDown}
               placeholder="Add tags (press Enter)"
-              className={`w-full px-4 py-2 rounded-lg ${
-                isDarkMode
-                  ? 'bg-gray-700 border-gray-600'
-                  : 'bg-white border-gray-300'
-              } border focus:outline-none focus:ring-2 focus:ring-purple-500`}
+              className={inputClass}
             />
           </div>
 
@@ -192,11 +186,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, isDarkMode }
                       )
                     )
                   }
-                  className={`flex-1 px-4 py-2 rounded-lg ${
-                    isDarkMode
-                      ? 'bg-gray-700 border-gray-600'
-                      : 'bg-white border-gray-300'
-                  } border focus:outline-none focus:ring-2 focus:ring-purple-500`}
+                  className={inputClass}
                 />
                 <input
                   type="text"
@@ -209,11 +199,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, isDarkMode }
                       )
                     )
                   }
-                  className={`flex-1 px-4 py-2 rounded-lg ${
-                    isDarkMode
-                      ? 'bg-gray-700 border-gray-600'
-                      : 'bg-white border-gray-300'
-                  } border focus:outline-none focus:ring-2 focus:ring-purple-500`}
+                  className={inputClass}
                 />
                 <button
                   onClick={() => removeMetaTag(tag.id)}
