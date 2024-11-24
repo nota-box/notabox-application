@@ -23,7 +23,7 @@ export function TypingEffect({ className = "", isVisible }: TypingEffectProps) {
         </div>
         <div className="typing-container subtitle">
           <span className="typing-text">
-            Your team's knowledge base, organized and accessible
+            Your team&#39;s knowledge base, organized and accessible
           </span>
         </div>
       </div>

@@ -34,10 +34,10 @@ interface RecordDialogProps {
   onSubmit?: (data: RecordFormData) => Promise<void>;
 }
 
-export function RecordDialog({ 
-  mode = 'create', 
-  record, 
-  isOpen, 
+export function RecordDialog({
+  mode = 'create',
+  record,
+  isOpen,
   onOpenChange,
   onSubmit: controlledOnSubmit,
 }: RecordDialogProps) {
@@ -99,7 +99,7 @@ export function RecordDialog({
   };
 
   const handleRemoveCustomField = (index: number) => {
-    const newFields = customFields.filter((_, i) => i !== index);
+    const newFields = customFields.filter((_unused: void, i: number) => i !== index);
     setCustomFields(newFields);
     setValue('customFields', newFields);
   };
@@ -200,7 +200,7 @@ export function RecordDialog({
 
           <div className="space-y-2">
             <Label>Custom Fields</Label>
-            {customFields.map((field, index) => (
+            {customFields.map((field: any, index: number) => (
               <div key={index} className="flex gap-2">
                 <Input
                   placeholder="Key"
