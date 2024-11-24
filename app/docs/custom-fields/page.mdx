@@ -1,0 +1,139 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Custom Fields
+
+Custom fields allow you to add structured data to your records.
+
+## Overview
+
+Custom fields provide:
+- Flexible data structure
+- Enhanced searchability
+- Better organization
+- Custom validation
+
+<Callout type="info">
+  Custom fields can be of various types: text, number, date, boolean, or select.
+</Callout>
+
+## Field Types
+
+### Text
+```typescript
+{
+  key: "Status",
+  type: "text",
+  value: "In Progress"
+}
+```
+
+### Number
+```typescript
+{
+  key: "Priority",
+  type: "number",
+  value: 1
+}
+```
+
+### Date
+```typescript
+{
+  key: "DueDate",
+  type: "date",
+  value: "2024-03-15"
+}
+```
+
+### Boolean
+```typescript
+{
+  key: "IsUrgent",
+  type: "boolean",
+  value: true
+}
+```
+
+### Select
+```typescript
+{
+  key: "Department",
+  type: "select",
+  value: "Engineering",
+  options: ["Engineering", "Design", "Marketing"]
+}
+```
+
+## Using Custom Fields
+
+### Adding Fields
+
+```typescript
+const record = await createRecord({
+  title: "Project Timeline",
+  customFields: [
+    {
+      key: "Project Phase",
+      type: "select",
+      value: "Planning"
+    },
+    {
+      key: "Estimated Hours",
+      type: "number",
+      value: 40
+    }
+  ]
+});
+```
+
+### Validation
+
+Custom fields can have validation rules:
+
+```typescript
+const fieldConfig = {
+  key: "Email",
+  type: "text",
+  validation: {
+    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+    required: true
+  }
+};
+```
+
+## Best Practices
+
+1. Use consistent field names
+2. Define clear validation rules
+3. Document field purposes
+4. Regular field audits
+5. Consider searchability
+
+<Callout type="warning">
+  Avoid creating too many custom fields. Focus on essential data points.
+</Callout>
+
+## Field Templates
+
+Create reusable field templates for common record types:
+
+```typescript
+const projectTemplate = {
+  fields: [
+    {
+      key: "Project ID",
+      type: "text",
+      required: true
+    },
+    {
+      key: "Status",
+      type: "select",
+      options: ["Planning", "In Progress", "Review", "Complete"]
+    },
+    {
+      key: "Due Date",
+      type: "date"
+    }
+  ]
+};
+```

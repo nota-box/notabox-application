@@ -1,0 +1,78 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Search API
+
+Powerful search capabilities through our API endpoints.
+
+## Endpoints
+
+### Search Records
+
+```http
+GET /api/search
+```
+
+Query parameters:
+- `q`: Search query
+- `type`: Filter by record type
+- `tags`: Filter by tags (comma-separated)
+- `from`: Start date (ISO format)
+- `to`: End date (ISO format)
+- `page`: Page number
+- `limit`: Results per page
+
+Example:
+```http
+GET /api/search?q=documentation&type=document&tags=technical,important
+```
+
+### Search Suggestions
+
+```http
+GET /api/search/suggestions
+```
+
+Query parameters:
+- `q`: Partial search query
+- `limit`: Maximum number of suggestions (default: 5)
+
+<Callout type="info">
+  Suggestions are based on recent searches and popular terms.
+</Callout>
+
+## Advanced Search
+
+### Query Syntax
+
+- `"exact phrase"`: Search for exact phrase
+- `tag:work`: Filter by tag
+- `type:document`: Filter by type
+- `before:2024-01-01`: Date filter
+- `after:2024-01-01`: Date filter
+- `by:user@example.com`: Filter by creator
+
+Example:
+```http
+GET /api/search?q="project documentation" tag:technical type:document
+```
+
+## Response Format
+
+```json
+{
+  "data": {
+    "results": [
+      {
+        "id": "rec_123",
+        "title": "Project Documentation",
+        "description": "Technical specifications",
+        "tags": ["technical", "documentation"],
+        "score": 0.95
+      }
+    ],
+    "total": 1,
+    "page": 1,
+    "limit": 20
+  }
+}
+```

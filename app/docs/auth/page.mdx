@@ -1,0 +1,42 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Authentication
+
+NotaBox provides multiple authentication methods to secure your data.
+
+## Available Methods
+
+- Email/Password
+- GitHub OAuth
+- Google OAuth
+- Guest Access
+
+<Callout type="warning">
+  Guest access has limited functionality. Some features may be restricted.
+</Callout>
+
+## Implementation
+
+```typescript
+import { useAuth } from '@/lib/auth';
+
+function LoginComponent() {
+  const { signIn, signUp, signOut } = useAuth();
+  
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      await signIn(email, password);
+      // Handle successful login
+    } catch (error) {
+      // Handle error
+    }
+  };
+}
+```
+
+## Security Best Practices
+
+1. Use strong passwords
+2. Enable two-factor authentication
+3. Regularly review active sessions
+4. Implement proper role-based access control

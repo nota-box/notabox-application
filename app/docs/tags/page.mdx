@@ -1,0 +1,67 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Tags
+
+Tags help organize and categorize your records efficiently.
+
+## Overview
+
+Tags in NotaBox are flexible labels that can be applied to any record. They help in:
+- Organizing content
+- Filtering search results
+- Creating logical groupings
+- Improving discoverability
+
+<Callout type="info">
+  Tags are case-insensitive and automatically normalized for consistency.
+</Callout>
+
+## Using Tags
+
+### Adding Tags
+
+Tags can be added when creating or editing a record:
+
+```typescript
+const record = await createRecord({
+  title: "Project Meeting Notes",
+  tags: ["meeting", "project", "important"]
+});
+```
+
+### Managing Tags
+
+- Tags can be added or removed at any time
+- Unused tags are automatically cleaned up
+- Tags can be colored for visual organization
+- Tags can be nested using the "/" separator (e.g., "project/frontend")
+
+## Best Practices
+
+1. Use consistent naming conventions
+2. Keep tags concise and meaningful
+3. Avoid too many tags per record
+4. Use tag hierarchies for complex categorization
+
+## Tag Search
+
+Search for records using tags:
+
+```typescript
+// Search by single tag
+const results = await searchRecords({ tags: ["important"] });
+
+// Search by multiple tags
+const results = await searchRecords({
+  tags: ["project", "frontend"],
+  matchAll: true // Records must have all specified tags
+});
+```
+
+## Tag Analytics
+
+NotaBox provides insights about tag usage:
+- Most used tags
+- Tag relationships
+- Usage trends
+- Tag effectiveness

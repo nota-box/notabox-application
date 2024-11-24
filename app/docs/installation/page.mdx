@@ -1,0 +1,52 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Installation Guide
+
+Learn how to set up NotaBox in your environment.
+
+<Callout type="info">
+  Make sure you have Node.js 18+ installed before proceeding.
+</Callout>
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/your-org/notabox.git
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+
+# Start the development server
+npm run dev
+```
+
+## Environment Setup
+
+Create a `.env.local` file with the following variables:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## Configuration
+
+NotaBox can be configured through the `config.json` file:
+
+```json
+{
+  "app": {
+    "name": "NotaBox",
+    "description": "Smart Note Management"
+  },
+  "features": {
+    "search": true,
+    "filters": true,
+    "customFields": true
+  }
+}
+```

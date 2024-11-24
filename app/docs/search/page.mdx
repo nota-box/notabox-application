@@ -1,0 +1,49 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Search Functionality
+
+NotaBox provides powerful search capabilities to help you find information quickly.
+
+## Features
+
+- Real-time search suggestions
+- Search history tracking
+- Advanced filtering options
+- Tag-based search
+
+<Callout type="info">
+  Search results are ranked by relevance and recent activity.
+</Callout>
+
+## Using Filters
+
+The search interface supports various filters:
+
+- Record Types (Documents, Notes, Media)
+- Date Range
+- Tags
+- Custom Fields
+
+## Search API
+
+```typescript
+// Basic search
+const results = await searchRecords(query);
+
+// Advanced search with filters
+const results = await searchRecords(query, {
+  recordTypes: ['documents', 'notes'],
+  dateRange: {
+    from: new Date('2024-01-01'),
+    to: new Date('2024-12-31')
+  },
+  tags: ['important', 'work']
+});
+```
+
+## Search Operators
+
+- `"exact phrase"`: Search for an exact phrase
+- `tag:work`: Search within specific tags
+- `type:document`: Filter by record type
+- `before:2024-01-01`: Date-based filtering

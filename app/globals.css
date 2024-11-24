@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 262 80% 50%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 262 80% 50%;
+    --radius: 0.75rem;
+  }
+ 
+  .dark {
+    --background: 270 35% 8%;
+    --foreground: 0 0% 98%;
+    --card: 270 35% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 270 35% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 263 70% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 270 25% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 270 25% 16%;
+    --muted-foreground: 240 5% 75%;
+    --accent: 270 25% 16%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 270 25% 18%;
+    --input: 270 25% 16%;
+    --ring: 263 70% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border font-ios;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-ios-rounded font-semibold tracking-tight;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* Logo styles */
+.logo-container {
+  @apply fixed top-4 left-6 z-[60] transition-all duration-300;
+}
+
+.logo-container.expanded {
+  @apply top-5 left-8 scale-125;
+}
+
+/* Search bar styles */
+.sticky-wrapper {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.sticky-wrapper.expanded {
+  @apply fixed top-0 left-0 right-0 px-4 py-4 bg-background/80 backdrop-blur-lg z-50;
+}
+
+.sticky-wrapper.expanded .search-container {
+  @apply max-w-2xl mx-auto;
+}
+
+.search-container {
+  @apply relative backdrop-blur-lg transition-all duration-300 ease-in-out;
+  width: 100%;
+}
+
+.search-container form {
+  @apply transition-all duration-300 rounded-[2rem] border border-border/50 bg-background/30 dark:bg-white/5;
+}
+
+.search-container input {
+  @apply text-foreground placeholder:text-muted-foreground/70 transition-all duration-300 px-6 rounded-full;
+  width: 100%;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.search-container input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.search-container.expanded input {
+  @apply text-lg;
+}
+
+.dark .search-container input {
+  @apply placeholder:text-muted-foreground/50;
+}
+
+.search-container button {
+  @apply text-muted-foreground hover:text-foreground transition-colors rounded-full;
+}
+
+/* Filter section styles */
+.filter-section {
+  @apply bg-background/95 dark:bg-card/95 backdrop-blur-md shadow-lg border border-border/50 mt-3 rounded-[2rem] overflow-hidden;
+  animation: slideDown 0.3s ease-out forwards;
+  transform-origin: top center;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.filter-trigger {
+  @apply hover:bg-primary/10 transition-colors;
+}
+
+.filter-trigger.active {
+  @apply bg-primary/20 text-primary;
+}
+
+/* Search suggestions */
+.search-suggestions {
+  @apply absolute w-full mt-2 py-2 bg-background/95 dark:bg-card/95 backdrop-blur-md rounded-[2rem] shadow-lg border border-border/50 z-50;
+}
+
+/* Search transition */
+.search-transition {
+  @apply transition-all duration-500 ease-in-out;
+}
+
+/* Results container */
+.results-container {
+  @apply mt-[120px] px-4;
+}
+
+/* Typing animation styles */
+.typing-container {
+  @apply relative overflow-hidden whitespace-nowrap mx-auto w-fit;
+}
+
+.typing-container.main-title .typing-text {
+  @apply text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70;
+  display: block;
+  width: 0;
+  animation: typing 3s steps(40) forwards;
+}
+
+.typing-container.subtitle .typing-text {
+  @apply text-lg text-muted-foreground bg-clip-text text-transparent bg-gradient-to-r from-muted-foreground to-muted-foreground/70;
+  display: block;
+  width: 0;
+  animation: typing 3s steps(40) forwards 1.5s;
+}
+
+@keyframes typing {
+  from { 
+    width: 0;
+  }
+  to { 
+    width: 100%;
+  }
+}

@@ -1,0 +1,83 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Records API
+
+Manage records through our REST API endpoints.
+
+## Endpoints
+
+### List Records
+
+```http
+GET /api/records
+```
+
+Query parameters:
+- `page`: Page number (default: 1)
+- `limit`: Records per page (default: 20)
+- `type`: Filter by record type
+- `tags`: Filter by tags (comma-separated)
+
+### Get Record
+
+```http
+GET /api/records/{id}
+```
+
+### Create Record
+
+```http
+POST /api/records
+```
+
+Request body:
+```json
+{
+  "title": "Project Documentation",
+  "description": "Technical specifications",
+  "tags": ["technical", "documentation"],
+  "customFields": [
+    {
+      "key": "Version",
+      "value": "1.0.0"
+    }
+  ]
+}
+```
+
+<Callout type="info">
+  File uploads should be sent as multipart/form-data.
+</Callout>
+
+### Update Record
+
+```http
+PATCH /api/records/{id}
+```
+
+### Delete Record
+
+```http
+DELETE /api/records/{id}
+```
+
+## Response Format
+
+```json
+{
+  "data": {
+    "id": "rec_123",
+    "title": "Project Documentation",
+    "description": "Technical specifications",
+    "tags": ["technical", "documentation"],
+    "customFields": [
+      {
+        "key": "Version",
+        "value": "1.0.0"
+      }
+    ],
+    "createdAt": "2024-03-08T12:00:00Z",
+    "updatedAt": "2024-03-08T12:00:00Z"
+  }
+}
+```

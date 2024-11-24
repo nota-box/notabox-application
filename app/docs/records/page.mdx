@@ -1,0 +1,56 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Record Management
+
+Records are the core data structure in NotaBox.
+
+## Record Types
+
+- Documents
+- Notes
+- Media Files
+- Custom Types
+
+<Callout type="info">
+  Each record type supports custom fields and tags for better organization.
+</Callout>
+
+## Creating Records
+
+```typescript
+interface Record {
+  title: string;
+  description?: string;
+  tags: string[];
+  customFields: {
+    key: string;
+    value: string;
+  }[];
+  file?: File;
+}
+
+// Create a new record
+const record = await createRecord({
+  title: "Project Documentation",
+  description: "Technical specifications and guidelines",
+  tags: ["technical", "documentation"],
+  customFields: [
+    { key: "Version", value: "1.0.0" },
+    { key: "Status", value: "Draft" }
+  ]
+});
+```
+
+## Record Lifecycle
+
+1. Creation
+2. Modification
+3. Archival
+4. Deletion
+
+## Best Practices
+
+- Use descriptive titles
+- Add relevant tags
+- Include custom fields for structured data
+- Keep records up to date

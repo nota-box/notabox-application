@@ -1,0 +1,51 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# API Reference
+
+NotaBox provides a comprehensive API for integrating with your applications.
+
+<Callout type="info">
+  All API endpoints require authentication unless specified otherwise.
+</Callout>
+
+## Base URL
+
+```
+https://api.notabox.com/v1
+```
+
+## Authentication
+
+Include your API key in the Authorization header:
+
+```bash
+Authorization: Bearer your_api_key
+```
+
+## Rate Limiting
+
+- 1000 requests per hour for authenticated users
+- 100 requests per hour for guest access
+
+## Error Handling
+
+```json
+{
+  "error": {
+    "code": "invalid_request",
+    "message": "Invalid parameters provided",
+    "details": {
+      "field": "title",
+      "issue": "required"
+    }
+  }
+}
+```
+
+## Versioning
+
+API versions are specified in the URL path. Current versions:
+
+- v1 (Current)
+- v2 (Beta)
+- v3 (Development)

@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.prose {
+  @apply text-foreground;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  @apply font-ios-rounded scroll-m-20;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold tracking-tight mb-8;
+}
+
+.prose h2 {
+  @apply text-3xl font-semibold tracking-tight mt-12 mb-6;
+}
+
+.prose h3 {
+  @apply text-2xl font-semibold tracking-tight mt-8 mb-4;
+}
+
+.prose h4 {
+  @apply text-xl font-semibold tracking-tight mt-6 mb-3;
+}
+
+.prose p {
+  @apply leading-7 mb-4;
+}
+
+.prose ul {
+  @apply my-6 ml-6 list-disc;
+}
+
+.prose ol {
+  @apply my-6 ml-6 list-decimal;
+}
+
+.prose li {
+  @apply mt-2;
+}
+
+.prose code {
+  @apply rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
+}
+
+.prose pre {
+  @apply mb-4 mt-6 overflow-x-auto rounded-lg border bg-muted p-4;
+}
+
+.prose a {
+  @apply font-medium underline underline-offset-4 hover:text-primary;
+}
+
+.prose blockquote {
+  @apply mt-6 border-l-2 pl-6 italic;
+}
+
+.prose img {
+  @apply rounded-lg border;
+}
+
+.prose hr {
+  @apply my-8;
+}

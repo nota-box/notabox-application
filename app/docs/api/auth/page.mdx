@@ -1,0 +1,95 @@
+import { Callout } from '@/components/docs/mdx/callout';
+
+# Authentication API
+
+Secure your API requests using our authentication endpoints.
+
+## Endpoints
+
+### Sign Up
+
+```http
+POST /api/auth/signup
+```
+
+Request body:
+```json
+{
+  "email": "user@example.com",
+  "password": "secure_password"
+}
+```
+
+### Sign In
+
+```http
+POST /api/auth/signin
+```
+
+Request body:
+```json
+{
+  "email": "user@example.com",
+  "password": "secure_password"
+}
+```
+
+### OAuth Authentication
+
+```http
+GET /api/auth/{provider}/authorize
+```
+
+Supported providers:
+- github
+- google
+
+<Callout type="info">
+  OAuth flows will redirect users to the provider's authentication page.
+</Callout>
+
+### Refresh Token
+
+```http
+POST /api/auth/refresh
+```
+
+Request body:
+```json
+{
+  "refreshToken": "your_refresh_token"
+}
+```
+
+### Sign Out
+
+```http
+POST /api/auth/signout
+```
+
+## Response Format
+
+```json
+{
+  "data": {
+    "accessToken": "your_access_token",
+    "refreshToken": "your_refresh_token",
+    "user": {
+      "id": "user_123",
+      "email": "user@example.com",
+      "name": "John Doe"
+    }
+  }
+}
+```
+
+## Error Handling
+
+```json
+{
+  "error": {
+    "code": "auth_error",
+    "message": "Invalid credentials"
+  }
+}
+```
