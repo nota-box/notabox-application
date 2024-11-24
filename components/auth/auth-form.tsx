@@ -70,16 +70,16 @@ export function AuthForm() {
 
   return (
     <div className="space-y-6">
-      <OAuthButtons />
-      
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
+            placeholder="name@example.com"
             {...register("email")}
             disabled={isLoading}
+            className="bg-background"
           />
           {errors.email && (
             <p className="text-sm text-destructive">{errors.email.message}</p>
@@ -90,8 +90,10 @@ export function AuthForm() {
           <Input
             id="password"
             type="password"
+            placeholder="••••••••"
             {...register("password")}
             disabled={isLoading}
+            className="bg-background"
           />
           {errors.password && (
             <p className="text-sm text-destructive">{errors.password.message}</p>
@@ -104,31 +106,46 @@ export function AuthForm() {
         <Button
           type="button"
           variant="ghost"
-          className="w-full"
+          className="w-full hover:bg-primary/5"
           onClick={() => setIsSignUp(!isSignUp)}
           disabled={isLoading}
         >
           {isSignUp ? "Already have an account?" : "Need an account?"}
         </Button>
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or
-            </span>
-          </div>
-        </div>
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={handleGuestLogin}
-        >
-          Continue as Guest
-        </Button>
       </form>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t border-border/50" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-card px-2 text-muted-foreground">
+            Or continue with
+          </span>
+        </div>
+      </div>
+
+      <OAuthButtons />
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t border-border/50" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-card px-2 text-muted-foreground">
+            Or
+          </span>
+        </div>
+      </div>
+
+      <Button
+        type="button"
+        variant="outline"
+        className="w-full bg-background hover:bg-primary/5"
+        onClick={handleGuestLogin}
+      >
+        Continue as Guest
+      </Button>
     </div>
   );
 }

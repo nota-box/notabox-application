@@ -24,13 +24,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Check for existing session
     const initAuth = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         setUser(session?.user ?? null);
         
-        // Subscribe to auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
           (_event, session) => {
             setUser(session?.user ?? null);

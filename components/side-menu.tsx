@@ -37,10 +37,13 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (menuRef.current && 
+          !menuRef.current.contains(event.target as Node) && 
+          !(event.target as Element).closest('[role="dialog"]')) {
         onClose();
       }
     };
@@ -57,6 +60,7 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
   const handleSignOut = async () => {
     try {
       await signOut();
+      setIsProfileOpen(false);
       toast({
         title: "Signed out",
         description: "You have been successfully signed out.",
@@ -92,14 +96,12 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
     onClose();
   };
 
-  // Get user initials for avatar fallback
   const getUserInitials = () => {
     if (isGuest) return "G";
     if (!user?.email) return "U";
     return user.email.charAt(0).toUpperCase();
   };
 
-  // Get display name
   const getDisplayName = () => {
     if (isGuest) return "Guest User";
     if (user?.user_metadata?.full_name) return user.user_metadata.full_name;
@@ -109,12 +111,19 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
   const menuItems = [
     {
       icon: (
-        <Popover>
+        <Popover 
+          open={isProfileOpen} 
+          onOpenChange={setIsProfileOpen}
+        >
           <PopoverTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
               className="relative"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsProfileOpen(true);
+              }}
             >
               <Avatar className="h-9 w-9">
                 <AvatarImage 
@@ -130,7 +139,18 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-80 p-4" side="right">
+          <PopoverContent 
+            className="w-80 p-4" 
+            side="right"
+            align="start"
+            sideOffset={20}
+            onInteractOutside={(e) => {
+              e.preventDefault();
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <div className="flex items-center gap-4">
               <Avatar className="h-16 w-16">
                 <AvatarImage 
@@ -163,7 +183,10 @@ export function SideMenu({ open, onClose }: SideMenuProps) {
             <Button
               variant="destructive"
               className="w-full"
-              onClick={handleSignOut}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSignOut();
+              }}
             >
               <LogOut className="h-4 w-4 mr-2" />
               {isGuest ? "Exit Guest Mode" : "Sign Out"}

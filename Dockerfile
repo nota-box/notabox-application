@@ -13,7 +13,7 @@ RUN npm ci
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY ../../../Downloads/project-bolt-sb1-u7rtn5/project .
 
 # Environment variables must be present at build time
 ARG NEXT_PUBLIC_SUPABASE_URL

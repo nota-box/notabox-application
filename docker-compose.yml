@@ -3,7 +3,7 @@ version: '3.8'
 services:
   nextjs:
     build:
-      context: .
+      context: ../../../Downloads/project-bolt-sb1-u7rtn5/project
       dockerfile: Dockerfile
       args:
         - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
@@ -19,7 +19,7 @@ services:
 
   nginx:
     build:
-      context: .
+      context: ../../../Downloads/project-bolt-sb1-u7rtn5/project
       dockerfile: Dockerfile.nginx
     ports:
       - "80:80"

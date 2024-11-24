@@ -13,6 +13,7 @@ import { TypingEffect } from "@/components/typing-effect";
 import { useAuth } from "@/lib/auth";
 import { getSearchSuggestions, addToSearchHistory } from "@/lib/search";
 import { FilterSection } from "@/components/search/filter-section";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
@@ -22,7 +23,14 @@ export default function Home() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
-  const { user } = useAuth();
+  const { user, isGuest } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user && !isGuest) {
+      router.push('/auth');
+    }
+  }, [user, isGuest, router]);
 
   // Filter states
   const [recordTypes, setRecordTypes] = useState({
@@ -87,6 +95,10 @@ export default function Home() {
     setLastSearchQuery(suggestion);
     addToSearchHistory(suggestion);
   };
+
+  if (!user && !isGuest) {
+    return null;
+  }
 
   return (
     <main className="min-h-screen w-full relative overflow-x-hidden">
